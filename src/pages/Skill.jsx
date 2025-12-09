@@ -28,12 +28,13 @@ const Skill = () => {
 
   const skillComp = (
     <div className="skill-card" key={skill._id}>
-      <h1 style={{ color: "white" }}>
-        <span>By : </span>
+      <div className="card-header">
+        <span style={{ color: "white" }}>By : </span>
         {skill.username}
-      </h1>
+      </div>
       <h2>
-        <span>Name :</span> {skill.skill}
+        {/* <span>Name :</span> */}
+        {skill.skill}
       </h2>
       <h3>
         <span>Proficiency :</span> {skill.proficiency}
@@ -59,6 +60,28 @@ const Skill = () => {
         <span>last updated : </span>
         {new Date(skill.updatedAt).toLocaleString()}
       </h5>
+      {skill.swap ? (
+        <div>
+          <ul>swappers</ul>
+          {skill.swappedBy.map((obj) => {
+            return (
+              <Link to={`/skills/user/${obj.email}`}>
+                <li
+                  style={{
+                    textDecoration: "underline",
+                    cursor: "pointer",
+                    color: "#3EA6FF",
+                  }}
+                >
+                  {obj.username}
+                </li>
+              </Link>
+            );
+          })}
+        </div>
+      ) : (
+        "No swaps yet"
+      )}
     </div>
   );
 
@@ -66,13 +89,9 @@ const Skill = () => {
     <div
       style={{
         display: "flex",
-        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        marginTop: "2rem",
-        padding: "2rem",
-        minWidth: "fit-content",
-        fontSize: "1.5rem",
+        margin: "2rem",
       }}
     >
       {/* <IoMdArrowRoundBack

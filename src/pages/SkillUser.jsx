@@ -42,7 +42,8 @@ const SkillUser = () => {
           {skill.username}
         </div>
         <h2>
-          <span>Name :</span> {skill.skill}
+          {/* <span>Name :</span> */}
+          {skill.skill}
         </h2>
         <h3>
           <span>Proficiency :</span> {skill.proficiency}

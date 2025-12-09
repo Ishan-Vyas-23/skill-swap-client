@@ -21,6 +21,8 @@ import NotFound from "./pages/NotFound";
 import Unauthorized from "./pages/Unauthorized";
 import NotificationBar from "./components/Notification";
 import Profile from "./components/Profile";
+import NotificationUser from "./pages/NotificationUser";
+import UserMutuals from "../src/pages/UserMutuals";
 
 const App = () => {
   return (
@@ -37,8 +39,13 @@ const App = () => {
             <Route path="/skills/user/edit/:id" element={<EditSkill />} />
             <Route path="/skills/user/delete/:id" element={<DeleteSkill />} />
             <Route path="/skills/user/search" element={<SearchBar />} />
+            <Route path="/skills/user/mutuals" element={<UserMutuals />} />
             <Route path="/skills/user/:email" element={<CustomUser />} />
             <Route path="/skills/notifications" element={<NotificationBar />} />
+            <Route
+              path="/skills/notifications/:id"
+              element={<NotificationUser />}
+            />
             <Route path="/skills/user/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Route>
@@ -56,13 +63,13 @@ const App = () => {
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
-        theme="dark" // or "light" / "colored"
+        theme="dark"
         toastStyle={{
-          backgroundColor: "#faedcd", // match your card bg
-          color: "black", // match your text
+          backgroundColor: "#faedcd",
+          color: "black",
         }}
         progressStyle={{
-          background: "#4FD1C5", // your accent color
+          background: "#4FD1C5",
         }}
       />
     </>

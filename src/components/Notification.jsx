@@ -1,23 +1,35 @@
 import React from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { CiSearch } from "react-icons/ci";
+import { MdPendingActions } from "react-icons/md";
+import { LiaUserFriendsSolid } from "react-icons/lia";
 
 const NotificationBar = () => {
   const token = localStorage.getItem("token");
   const rawUser = localStorage.getItem("user");
-  const { username, email } = JSON.parse(rawUser);
+  const user = rawUser ? JSON.parse(rawUser) : null;
+
+  const username = user?.username;
+  const email = user?.email;
   const [swappers, setSwappers] = React.useState([]);
   const navigate = useNavigate();
-  const notiFetch = async () => {
+
+  const incomingRequestsFetch = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/v1/skills`);
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/skills/requests/fetch`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await res.json();
-      const userSkills = data.obj.filter((skill) => skill.userEmail === email);
-      const allSwappers = userSkills.flatMap((skill) => skill.swappedBy);
-      setSwappers(allSwappers);
+      setSwappers(data.swaps);
     } catch (error) {
-      toast.error("something went wrong ");
+      toast.error("something went wrong");
       console.log(error);
     }
   };
@@ -35,31 +47,102 @@ const NotificationBar = () => {
       });
   }
 
-  const swapDisplay = swappers.map((obj) => {
-    return (
-      <ul key={obj._id}>
-        <li onClick={() => copyEmail(obj.email)} style={{ cursor: "grabbing" }}>
-          {obj.username} : {obj.email}
-        </li>
-      </ul>
-    );
-  });
-
   React.useEffect(() => {
-    notiFetch();
-  }, [email, token]);
+    incomingRequestsFetch();
+  }, []);
+
+  const redirectToSwapper = (swapID, name) => {
+    navigate(`/skills/notifications/${swapID}`, {
+      state: { mutualName: name },
+    });
+  };
+
+  const rejectSwap = async (id) => {
+    try {
+      const url = `${
+        import.meta.env.VITE_API_URL
+      }/api/v1/skills/swap/${id}/reject`;
+
+      const res = await axios.patch(
+        url,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.error("swap rejected");
+      setInterval(() => incomingRequestsFetch(), 500);
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+
+  const swapDisplay =
+    swappers.length > 0 ? (
+      swappers.map((obj) => {
+        return (
+          <div key={obj._id} className="req-box">
+            <p>
+              <span>{obj.initiatorID.username}</span> wants to swap for skill :{" "}
+              <span>{obj.targetSkillID.skill}</span>
+            </p>
+            <CiSearch
+              className="req-btn"
+              onClick={() =>
+                redirectToSwapper(obj._id, obj.initiatorID.username)
+              }
+            />
+            <button
+              className="noti-reject-btn"
+              onClick={() => rejectSwap(obj._id)}
+            >
+              X
+            </button>
+          </div>
+        );
+      })
+    ) : (
+      <p
+        style={{
+          color: "whitesmoke",
+          textTransform: "capitalize",
+          fontSize: "1.2rem",
+        }}
+      >
+        no new requests yet...
+      </p>
+    );
 
   return (
     <div className="notification-bar">
       <h1 style={{ textTransform: "uppercase" }}>{username}</h1>
-      <h2 style={{ writingMode: "horizontal-tb", textOrientation: "mixed" }}>
-        Swapped By:
+      <Link
+        style={{
+          writingMode: "horizontal-tb",
+          textOrientation: "mixed",
+          display: "flex",
+          gap: "1rem",
+        }}
+        to={"/skills/user/mutuals"}
+      >
+        <LiaUserFriendsSolid />
+        Mutuals
+      </Link>
+      <h2
+        style={{
+          writingMode: "horizontal-tb",
+          textOrientation: "mixed",
+          display: "flex",
+          gap: "1rem",
+          borderBottom: "1px solid white",
+        }}
+      >
+        <MdPendingActions />
+        Pending Requests
       </h2>
-      {swappers.length === 0 ? (
-        <p style={{ writingMode: "horizontal-tb" }}>No swaps yet</p>
-      ) : (
-        swapDisplay
-      )}
+      <div>{swapDisplay}</div>
     </div>
   );
 };

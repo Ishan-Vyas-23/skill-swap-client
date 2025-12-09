@@ -23,15 +23,15 @@ const UserNav = () => {
           <h2>Search User</h2>
         </Link>
         <div>
-          <CgProfile
-            style={{ color: "white", fontSize: "1.5rem", cursor: "pointer" }}
-            onClick={() => navigate("/skills/user/profile")}
-          />
           <IoIosNotifications
             style={{ color: "yellow", fontSize: "1.5rem", cursor: "pointer" }}
             onClick={() => navigate("/skills/notifications")}
           />
-          <h2 style={{ color: "peachpuff", textTransform: "uppercase" }}>
+          <CgProfile
+            style={{ color: "white", fontSize: "1.5rem", cursor: "pointer" }}
+            onClick={() => navigate("/skills/user/profile")}
+          />
+          <h2 style={{ color: "white", textTransform: "uppercase" }}>
             {username}
           </h2>
         </div>
