@@ -47,7 +47,6 @@ const App = () => {
               element={<NotificationUser />}
             />
             <Route path="/skills/user/profile" element={<Profile />} />
-            <Route path="*" element={<NotFound />} />
           </Route>
           <Route path="/contact" element={<Contact />} />
           <Route path="/about" element={<About />} />
