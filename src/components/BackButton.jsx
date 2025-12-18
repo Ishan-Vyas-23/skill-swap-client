@@ -15,7 +15,7 @@ const BackButton = () => {
   return (
     <div className="back-btn-container">
       <div className="back-btn">
-        <IoMdArrowBack onClick={back} />
+        <IoMdArrowBack onClick={back} style={{ position: "absolute" }} />
       </div>
       {location.pathname === "/skills" ? (
         <div className="sort-options">

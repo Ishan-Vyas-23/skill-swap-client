@@ -7,8 +7,8 @@ import axios from "axios";
 
 const SkillHome = () => {
   const token = localStorage.getItem("token");
-  const rawUser = localStorage.getItem("user");
   const navigate = useNavigate();
+  const rawUser = localStorage.getItem("user");
   let user = JSON.parse(rawUser);
   const [skills, setSkills] = React.useState([]);
   const [params, setParams] = useSearchParams();
@@ -21,7 +21,7 @@ const SkillHome = () => {
       const data = await res.json();
       setSkills(data.obj);
     } catch (error) {
-      toast.error("Error fetching skills:", error.message);
+      toast.error("Error fetching skills:", error.response.data.message);
     }
   };
 
@@ -48,7 +48,7 @@ const SkillHome = () => {
       toast.success("Swap sent successfully!");
     } catch (error) {
       if (error.response?.status === 409) {
-        toast.info(error.response.data.message); // "You've already swapped..."
+        toast.info(error.response.data.message);
       } else {
         toast.error("Unable to swap the skill");
       }

@@ -23,6 +23,7 @@ import NotificationBar from "./components/Notification";
 import Profile from "./components/Profile";
 import NotificationUser from "./pages/NotificationUser";
 import UserMutuals from "../src/pages/UserMutuals";
+import ChatPage from "./pages/ChatPage";
 
 const App = () => {
   return (
@@ -42,6 +43,7 @@ const App = () => {
             <Route path="/skills/user/mutuals" element={<UserMutuals />} />
             <Route path="/skills/user/:email" element={<CustomUser />} />
             <Route path="/skills/notifications" element={<NotificationBar />} />
+            <Route path="/chat" element={<ChatPage />} />
             <Route
               path="/skills/notifications/:id"
               element={<NotificationUser />}

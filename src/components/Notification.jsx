@@ -5,16 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { MdPendingActions } from "react-icons/md";
 import { LiaUserFriendsSolid } from "react-icons/lia";
+import { useLocation } from "react-router-dom";
 
 const NotificationBar = () => {
   const token = localStorage.getItem("token");
   const rawUser = localStorage.getItem("user");
   const user = rawUser ? JSON.parse(rawUser) : null;
-
   const username = user?.username;
   const email = user?.email;
-  const [swappers, setSwappers] = React.useState([]);
   const navigate = useNavigate();
+  const [swappers, setSwappers] = React.useState([]);
 
   const incomingRequestsFetch = async () => {
     try {
@@ -33,7 +33,9 @@ const NotificationBar = () => {
       console.log(error);
     }
   };
-
+  React.useEffect(() => {
+    incomingRequestsFetch();
+  }, []);
   function copyEmail(email) {
     navigator.clipboard
       .writeText(email)
@@ -46,10 +48,6 @@ const NotificationBar = () => {
         console.error(err);
       });
   }
-
-  React.useEffect(() => {
-    incomingRequestsFetch();
-  }, []);
 
   const redirectToSwapper = (swapID, name) => {
     navigate(`/skills/notifications/${swapID}`, {
