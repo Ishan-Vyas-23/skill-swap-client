@@ -21,7 +21,10 @@ const ChatPage = () => {
   }, [activeChat?.messages]);
 
   useEffect(() => {
-    socket.current = io(import.meta.env.VITE_SOCKET_URL);
+    socket.current = io(import.meta.env.VITE_SOCKET_URL, {
+      transports: ["websocket"],
+    });
+
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         senderID: data.senderID,
