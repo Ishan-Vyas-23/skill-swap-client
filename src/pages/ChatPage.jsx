@@ -21,9 +21,7 @@ const ChatPage = () => {
   }, [activeChat?.messages]);
 
   useEffect(() => {
-    socket.current = io(import.meta.env.VITE_SOCKET_URL, {
-      transports: ["websocket"],
-    });
+    socket.current = io(import.meta.env.VITE_SOCKET_URL);
 
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
@@ -272,13 +270,13 @@ const ChatPage = () => {
 
   return (
     <div className="chat-page">
-      <div className="chat-cont">{activeChatDisplay}</div>
       <div className="convo-cont">
         <h3 style={{ textAlign: "center" }}>My Chats</h3>
         <div className="convo-box">
           {convoDisplay ? convoDisplay : `no mutuals yet`}
         </div>
       </div>
+      <div className="chat-cont">{activeChatDisplay}</div>
     </div>
   );
 };
