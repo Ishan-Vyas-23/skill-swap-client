@@ -19,19 +19,19 @@ const BackButton = () => {
       </div>
       {location.pathname === "/skills" ? (
         <div className="sort-options">
-          <Link to={"?filterBy=hot"}>
-            <button>Hot</button>
-          </Link>
           <Link to={"?filterBy=recent"}>
             <button>Recently added</button>
           </Link>
           <Link to={"?filterBy=popular"}>
             <button>Popular</button>
           </Link>
+          <Link to={"?filterBy=hot"}>
+            <button>Hot</button>
+          </Link>
           {typeFilter ? (
             <Link to={"/skills"}>
               <button style={{ backgroundColor: "white", color: "black" }}>
-                Clear filters
+                clear
               </button>
             </Link>
           ) : null}
