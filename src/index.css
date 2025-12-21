@@ -488,32 +488,34 @@ h2 {
   justify-content: space-between;
   align-items: center;
   position: absolute;
-}
-.back-btn-container .sort-options {
-  position: relative;
-  right: 0;
-  display: flex;
-  flex-direction: row;
-  padding-inline: 2rem;
-  justify-content: space-evenly;
-  align-items: center;
   gap: 1rem;
+  width: 100%;
 }
-.sort-options button {
-  background-color: #bdbdbd;
-  color: black;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  cursor: pointer;
+
+.sort-options {
+  padding: 1rem;
+}
+.sort-options > select {
+  width: 100%;
+  padding: 8x;
+  background-color: #1c1c1c;
+  color: #ededed;
+  border: 1px solid #fff8dc;
+  border-radius: 6px;
+  font-size: 16px;
+  font-family: inherit;
   outline: none;
-  border: none;
-  font-size: 1.1rem;
-  white-space: nowrap;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
 }
-.sort-options button:hover {
-  transform: scale(1.05);
-  border: 1px solid white;
+.sort-options select:hover {
+  background-color: #2a2a2a;
+}
+.sort-options select:focus {
+  box-shadow: 0 0 5px #fff8dc;
+}
+.sort-options select option {
+  background-color: #1c1c1c;
+  color: #fafafa;
 }
 .back-btn {
   max-width: max-content;

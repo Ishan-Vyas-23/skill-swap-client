@@ -118,7 +118,7 @@ const SkillHome = () => {
 
   return (
     <>
-      <div className="all-skill">{skillDisplay}</div>;
+      <div className="all-skill">{skillDisplay}</div>
     </>
   );
 };

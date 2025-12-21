@@ -2,6 +2,8 @@ import React from "react";
 import { IoMdArrowBack } from "react-icons/io";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { FaFilter } from "react-icons/fa";
+
 const BackButton = () => {
   const navigate = useNavigate();
 
@@ -18,24 +20,19 @@ const BackButton = () => {
         <IoMdArrowBack onClick={back} style={{ position: "absolute" }} />
       </div>
       {location.pathname === "/skills" ? (
-        <div className="sort-options">
-          <Link to={"?filterBy=recent"}>
-            <button>Recently added</button>
-          </Link>
-          <Link to={"?filterBy=popular"}>
-            <button>Popular</button>
-          </Link>
-          <Link to={"?filterBy=hot"}>
-            <button>Hot</button>
-          </Link>
-          {typeFilter ? (
-            <Link to={"/skills"}>
-              <button style={{ backgroundColor: "white", color: "black" }}>
-                clear
-              </button>
-            </Link>
-          ) : null}
-        </div>
+        <label className="sort-options">
+          <h4>Filters</h4>
+          <select
+            onChange={(e) => navigate(`${location.pathname}${e.target.value}`)}
+          >
+            <option value="?filterBy=recent">New</option>
+            <option value="?filterBy=hot">Hot</option>
+            <option value="?filterBy=popular">popular</option>
+            <option value="" selected>
+              none
+            </option>
+          </select>
+        </label>
       ) : null}
     </div>
   );

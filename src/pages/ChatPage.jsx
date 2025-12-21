@@ -253,7 +253,10 @@ const ChatPage = () => {
           value={chatText || ""}
           onChange={(e) => setChatText(e.target.value)}
         />
-        <button onClick={() => sendNewMessage(activeChat.chatID)}>
+        <button
+          onClick={() => sendNewMessage(activeChat.chatID)}
+          disabled={chatText ? false : true}
+        >
           {<IoMdSend />}
         </button>
       </div>
