@@ -8,6 +8,10 @@ const Dashboard = () => {
 
   const link = isLoggedIn ? "/skills" : "/auth";
 
+  useEffect(() => {
+    fetch(import.meta.env.VITE_API_URL + "/health");
+  }, []);
+
   return (
     <div className="dashboard">
       <container>
