@@ -40,11 +40,11 @@ const NotificationBar = () => {
     navigator.clipboard
       .writeText(email)
       .then(() => {
-        toast.info("email copied to clipboard ");
+        toast.info("email copied to clipboard");
         navigate("/skills/user/search");
       })
       .catch((err) => {
-        alert("Failed to copy ");
+        alert("Failed to copy");
         console.error(err);
       });
   }

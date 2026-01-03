@@ -3,8 +3,8 @@ import { Outlet } from "react-router-dom";
 import { CgProfile } from "react-icons/cg";
 import { IoIosNotifications } from "react-icons/io";
 import { FaRocketchat } from "react-icons/fa";
-import React from "react";
 import BackButton from "./BackButton";
+import React from "react";
 import { toast } from "react-toastify";
 
 const UserNav = () => {
@@ -12,6 +12,29 @@ const UserNav = () => {
   const { username } = JSON.parse(rawUser);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [notificationCount, setNotificationCount] = React.useState(0);
+
+  const incomingRequestsCountFetch = async () => {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/v1/skills/requests/fetch-count`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      const data = await res.json();
+      setNotificationCount(data.count);
+    } catch (error) {
+      toast.error("something went wrong");
+      console.log(error);
+    }
+  };
+
+  React.useEffect(() => {
+    incomingRequestsCountFetch();
+  }, []);
 
   return (
     <div>
@@ -31,7 +54,8 @@ const UserNav = () => {
             onClick={() => navigate("/chat")}
           />
           <div className="notification-bell-box">
-            <span>0</span>
+            {notificationCount ? <span>{notificationCount}</span> : null}
+
             <IoIosNotifications
               style={{ color: "yellow", fontSize: "1.5rem", cursor: "pointer" }}
               onClick={() => navigate("/skills/notifications")}

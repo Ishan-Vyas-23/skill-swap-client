@@ -39,7 +39,7 @@ const CustomUser = () => {
       toast.success("Swapped back succesfully !");
     } catch (error) {
       if (error.response?.status === 409) {
-        toast.info(error.response.data.message); // "You've already swapped..."
+        toast.info(error.response.data.message);
       } else {
         toast.error("Unable to swap the skill");
       }

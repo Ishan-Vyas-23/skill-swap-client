@@ -26,7 +26,7 @@ const DeleteSkill = () => {
         err.message ||
         "Something went wrong. Please try again.";
 
-      toast.error(`❌ ${message}`);
+      toast.error(` ${message}`);
     }
   };
 
