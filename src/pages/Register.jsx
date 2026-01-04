@@ -52,6 +52,25 @@ const Register = () => {
         toast.success("Account verified!");
         navigate("/skills");
       }
+
+      if (mode === "forgot-password") {
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/v1/user/reset-otp`,
+          { userEmail: email }
+        );
+
+        toast.success(res.data.message);
+        setMode("reset-password");
+      }
+
+      if (mode === "reset-password") {
+        const res = await axios.post(
+          `${import.meta.env.VITE_API_URL}/api/v1/user/reset-password`,
+          { userEmail: email, newPass: password, otp }
+        );
+        toast.success(res.data.message);
+        setMode("login");
+      }
     } catch (err) {
       const message =
         err.response?.data?.message ||
@@ -69,6 +88,7 @@ const Register = () => {
           {mode === "login" && "Login"}
           {mode === "register" && "Register"}
           {mode === "verify-otp" && "Verify OTP"}
+          {mode === "forgot-password" && "Reset Password"}
         </h1>
 
         <div>
@@ -86,22 +106,34 @@ const Register = () => {
                 <input onChange={(e) => setEmail(e.target.value)} />
               </label>
 
-              <label>
-                <h2>Password</h2>
-                <input
-                  type="password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </label>
+              {mode != "forgot-password" ? (
+                <label>
+                  <h2>
+                    {mode === "reset-password" ? "new password" : "password"}
+                  </h2>
+                  <input
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  {mode === "login" ? (
+                    <p
+                      onClick={() => setMode("forgot-password")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      forgot password?
+                    </p>
+                  ) : null}
+                </label>
+              ) : null}
             </>
           )}
 
-          {mode === "verify-otp" && (
+          {mode === "verify-otp" || mode === "reset-password" ? (
             <label>
-              <h2>Enter OTP</h2>
+              <h2>OTP</h2>
               <input onChange={(e) => setOtp(e.target.value)} />
             </label>
-          )}
+          ) : null}
         </div>
         <button>{mode}</button>
         {mode !== "verify-otp" && (
