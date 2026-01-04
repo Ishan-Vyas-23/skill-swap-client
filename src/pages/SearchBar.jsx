@@ -9,21 +9,36 @@ import { PiGreaterThanThin } from "react-icons/pi";
 import { PiLessThanThin } from "react-icons/pi";
 import { FaQuoteLeft } from "react-icons/fa6";
 import { FaQuoteRight } from "react-icons/fa6";
+import { useLocation } from "react-router-dom";
 
 const SearchBar = () => {
   const [email, setEmail] = React.useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
+  const location = useLocation();
+  const userEmail = location.state?.userEmail;
   const [userData, setUserData] = React.useState({
     user: {},
     skills: [],
     reviews: [],
   });
 
+  React.useEffect(() => {
+    if (userEmail) {
+      setEmail(userEmail);
+    }
+  }, [userEmail]);
+
+  React.useEffect(() => {
+    if (email) {
+      submitHandler();
+    }
+  }, [email]);
+
   const [sliderCount, setSliderCount] = React.useState(0);
 
   const submitHandler = async (e) => {
-    e.preventDefault();
+    if (e) e.preventDefault();
     try {
       const url = `${
         import.meta.env.VITE_API_URL
@@ -139,9 +154,10 @@ const SearchBar = () => {
           type="text"
           placeholder="Search for a user Email..."
           className="searchbar"
-          name="user"
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
+
         <button type="submit" className="logout-btn">
           <CiSearch />
         </button>

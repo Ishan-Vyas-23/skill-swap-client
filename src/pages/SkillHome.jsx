@@ -3,6 +3,7 @@ import React from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { IoIosOpen } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { CgProfile } from "react-icons/cg";
 import axios from "axios";
 
 const SkillHome = () => {
@@ -70,7 +71,18 @@ const SkillHome = () => {
     return (
       <div className="skill-card" key={skill._id}>
         <div className="card-header">
-          <span style={{ color: "white" }}>By : </span>
+          <span style={{ color: "#181818" }}>
+            {" "}
+            <CgProfile
+              style={{ cursor: "pointer" }}
+              onClick={() =>
+                navigate("/skills/user/search", {
+                  state: { userEmail: skill.userEmail },
+                })
+              }
+            />{" "}
+            :{" "}
+          </span>
           {skill.username}
         </div>
         <h2>

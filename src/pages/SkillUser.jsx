@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { FiEdit2 } from "react-icons/fi";
 
 import { MdDelete } from "react-icons/md";
-import axios from "axios";
 
 const SkillUser = () => {
   const rawData = localStorage.getItem("user");
@@ -129,7 +128,6 @@ const SkillUser = () => {
           skillDisplay
         )}
       </div>
-      ;
     </>
   );
 };
